@@ -1,0 +1,36 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.core.config import settings
+from app.api.v1.routes import auth
+
+
+def create_app() -> FastAPI:
+    app = FastAPI(
+        title="SatEnhance AI Backend",
+        version="0.1.0",
+        description="FastAPI backend for SatEnhance AI – Satellite Image Super-Resolution Platform",
+    )
+
+    # CORS configuration – we'll tighten this later per environment
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=settings.CORS_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    # API routes
+    api_prefix = settings.API_V1_STR
+    app.include_router(auth.router, prefix=f"{api_prefix}/auth", tags=["auth"])
+
+    # Simple health check
+    @app.get("/health", tags=["health"])
+    async def health_check():
+        return {"status": "ok", "app": "sat-enhance-ai-backend"}
+
+    return app
+
+
+app = create_app()
