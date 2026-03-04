@@ -1,0 +1,18 @@
+# Dataset folders ignore karo — bahut badi hain
+data/raw/
+data/processed/
+
+# Model checkpoints ignore karo
+checkpoints/
+
+# Python cache ignore karo
+__pycache__/
+*.pyc
+*.pyo
+
+# Results images ignore karo
+results/images/
+
+# IDE files ignore karo
+.idea/
+.vscode/
