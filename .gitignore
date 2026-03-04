@@ -1,3 +1,5 @@
+# Zip files ignore karo
+*.zip
 # Dataset folders ignore karo — bahut badi hain
 data/raw/
 data/processed/
