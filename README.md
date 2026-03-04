@@ -1,5 +1,7 @@
 ## Satellite SRCNN
 
+Deep Learning-Based Super-Resolution for Satellite Imaging Systems
+
 This repository contains an implementation of a Super-Resolution Convolutional Neural Network (SRCNN) for enhancing the spatial resolution of satellite imagery.
 
 ### Project structure
