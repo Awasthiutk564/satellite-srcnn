@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
+from app.api.v1.routes import auth, enhance, images
 from app.core.config import settings
-from app.api.v1.routes import auth
+from app.utils.file_storage import STORAGE_ROOT
 
 
 def create_app() -> FastAPI:
@@ -21,9 +23,18 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # Static files for stored images
+    app.mount(
+        "/files",
+        StaticFiles(directory=str(STORAGE_ROOT)),
+        name="files",
+    )
+
     # API routes
     api_prefix = settings.API_V1_STR
     app.include_router(auth.router, prefix=f"{api_prefix}/auth", tags=["auth"])
+    app.include_router(images.router, prefix=f"{api_prefix}/images", tags=["images"])
+    app.include_router(enhance.router, prefix=f"{api_prefix}/enhance", tags=["enhance"])
 
     # Simple health check
     @app.get("/health", tags=["health"])
