@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict
 import cv2
 import numpy as np
-from utils.metrics import calculate_mse, calculate_psnr, calculate_ssim
+from utils.metrics import calculate_mse, calculate_psnr, calculate_ssim  # pyright: ignore[reportMissingImports]
 
 def run_bicubic_super_resolution(
     hr_path: Path,
