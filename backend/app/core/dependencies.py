@@ -1,8 +1,8 @@
 from typing import Annotated
 
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.orm import Session
+from fastapi import Depends, HTTPException, status  # pyright: ignore[reportMissingImports]
+from fastapi.security import OAuth2PasswordBearer  # pyright: ignore[reportMissingImports]
+from sqlalchemy.orm import Session  # pyright: ignore[reportMissingImports]
 
 from app.core.security import decode_access_token
 from app.db.models.user import User

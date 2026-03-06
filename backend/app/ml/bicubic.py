@@ -6,7 +6,7 @@ from typing import Dict
 import cv2
 import numpy as np
 
-from app.ml.metrics import calculate_mse, calculate_psnr, calculate_ssim
+from utils.metrics import calculate_mse, calculate_psnr, calculate_ssim
 
 
 def run_bicubic_super_resolution(
