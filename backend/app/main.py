@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.v1.routes import auth, enhance, images
 from app.core.config import settings
+from app.db.base import Base
 from app.utils.file_storage import STORAGE_ROOT, _ensure_directories
 
 
