@@ -1,20 +1,36 @@
-# Zip files ignore karo
-*.zip
-# Dataset folders ignore karo — bahut badi hain
-data/raw/
-data/processed/
-
-# Model checkpoints ignore karo
-checkpoints/
-
-# Python cache ignore karo
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.env
 
-# Results images ignore karo
-results/images/
+# Node
+node_modules/
+dist/
+dist-ssr
+*.local
 
-# IDE files ignore karo
-.idea/
+# IDEs
 .vscode/
+.idea/
+
+# Backend specific
+backend/storage/
+backend/checkpoints/
+backend/*.db
+backend/*.log
+backend/error_out.txt
+backend/login_out.txt
+backend/test_out.txt
+backend/__pycache__/
+
+# Large Data & Models
+data/
+checkpoints/
+results/
+models/
+storage/
+**/__pycache__/
