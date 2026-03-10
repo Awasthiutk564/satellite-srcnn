@@ -1,3 +1,8 @@
 {
-  "detail": "1 validation error for UserRead\nid\n  Input should be a valid string [type=string_type, input_value=UUID('1c3a5e42-56cc-41c6-95b2-f1efadb7bc9f'), input_type=UUID]\n    For further information visit https://errors.pydantic.dev/2.9/v/string_type"
+  "email": "test_13799775287646b9afe7861efb9db452@ex.com",
+  "full_name": null,
+  "is_active": true,
+  "id": "b52878ea-4de6-44b7-9679-78dbf8f6832c",
+  "created_at": "2026-03-10T17:08:54.501088",
+  "updated_at": "2026-03-10T17:08:54.501092"
 }
