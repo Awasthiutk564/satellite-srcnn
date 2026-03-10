@@ -5,10 +5,10 @@ from typing import Tuple
 
 import torch
 
-from models.srcnn import SRCNN
+from app.models.srcnn import SRCNN
 
 
-BASE_DIR = Path(__file__).resolve().parents[2]
+BASE_DIR = Path(__file__).resolve().parents[3]
 CHECKPOINTS_DIR = BASE_DIR / "checkpoints"
 DEFAULT_WEIGHTS_PATH = CHECKPOINTS_DIR / "srcnn_best.pth"
 
@@ -35,10 +35,9 @@ def _load_model() -> Tuple[SRCNN, torch.device]:
 
 
 def get_srcnn_model() -> Tuple[SRCNN, torch.device]:
-    \"\"\"Return a lazily-loaded SRCNN model and device.
+    """Return a lazily-loaded SRCNN model and device.
 
     If the checkpoint is missing, the model will run with randomly
     initialized weights so that the API still functions for demos.
-    \"\"\""
+    """
     return _load_model()
-
