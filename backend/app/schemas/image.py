@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from uuid import UUID
 
 from pydantic import BaseModel
 
@@ -7,7 +8,7 @@ from app.schemas.result import ResultRead
 
 
 class ImageRead(BaseModel):
-    id: str
+    id: UUID
     original_filename: str
     storage_path: str
     width: int

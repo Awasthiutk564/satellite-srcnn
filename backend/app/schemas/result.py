@@ -1,12 +1,13 @@
 from datetime import datetime
 from typing import Optional
+from uuid import UUID
 
 from pydantic import BaseModel
 
 
 class ResultRead(BaseModel):
-    id: str
-    image_id: str
+    id: UUID
+    image_id: UUID
     model_type: str
     scale_factor: int
     output_path: str
