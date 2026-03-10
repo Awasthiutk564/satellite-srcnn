@@ -19,7 +19,7 @@ class Result(Base):
         index=True,
     )
 
-    model_type = Column(String, nullable=False)  # e.g. \"bicubic\" or \"srcnn\"
+    model_type = Column(String, nullable=False)  # e.g. "bicubic" or "srcnn"
     scale_factor = Column(Integer, nullable=False)
 
     output_path = Column(String, nullable=False)

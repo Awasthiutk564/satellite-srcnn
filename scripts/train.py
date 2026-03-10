@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, random_split
 
 # Apne modules import karo
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from models.srcnn       import SRCNN
+from models.srcnn       import SRCNN  # pyright: ignore[reportMissingImports]
 from utils.dataset      import SatelliteDataset
 
 # ── Paths ─────────────────────────────────────────────────────
