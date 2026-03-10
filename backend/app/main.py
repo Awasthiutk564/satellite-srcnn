@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.v1.routes import auth, enhance, images
 from app.core.config import settings
-from app.utils.file_storage import STORAGE_ROOT
+from app.utils.file_storage import STORAGE_ROOT, _ensure_directories
 
 
 def create_app() -> FastAPI:
@@ -14,7 +14,7 @@ def create_app() -> FastAPI:
         description="FastAPI backend for SatEnhance AI – Satellite Image Super-Resolution Platform",
     )
 
-    # CORS configuration – we'll tighten this later per environment
+    # CORS configuration
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
@@ -22,6 +22,9 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # Ensure storage directories exist before mounting
+    _ensure_directories()
 
     # Static files for stored images
     app.mount(
