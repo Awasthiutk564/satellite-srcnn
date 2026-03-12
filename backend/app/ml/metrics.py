@@ -1,23 +1,19 @@
-from __future__ import annotations
-
 import numpy as np
 from skimage.metrics import structural_similarity as ssim
 
-
-def calculate_mse(original: np.ndarray, predicted: np.ndarray) -> float:
-    original_f = original.astype(np.float32)
-    predicted_f = predicted.astype(np.float32)
-    return float(np.mean((original_f - predicted_f) ** 2))
-
-
-def calculate_psnr(original: np.ndarray, predicted: np.ndarray) -> float:
-    mse = calculate_mse(original, predicted)
+def calculate_psnr(original, compressed):
+    """Calculate Peak Signal to Noise Ratio."""
+    mse = np.mean((original.astype(np.float32) - compressed.astype(np.float32)) ** 2)
     if mse == 0:
-        return 100.0
+        return 100
     max_pixel = 255.0
-    return float(20 * np.log10(max_pixel / np.sqrt(mse)))
+    psnr = 20 * np.log10(max_pixel / np.sqrt(mse))
+    return psnr
 
+def calculate_mse(original, compressed):
+    """Calculate Mean Squared Error."""
+    return np.mean((original.astype(np.float32) - compressed.astype(np.float32)) ** 2)
 
-def calculate_ssim(original: np.ndarray, predicted: np.ndarray) -> float:
-    return float(ssim(original, predicted, data_range=255))
-
+def calculate_ssim(original, compressed):
+    """Calculate Structural Similarity Index."""
+    return ssim(original, compressed, data_range=255)
