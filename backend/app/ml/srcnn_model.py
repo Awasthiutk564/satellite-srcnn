@@ -5,7 +5,13 @@ from typing import Tuple
 
 import torch
 
-from app.models.srcnn import SRCNN
+import sys
+
+BASE_DIR_TMP = Path(__file__).resolve().parents[3]
+if str(BASE_DIR_TMP) not in sys.path:
+    sys.path.append(str(BASE_DIR_TMP))
+
+from models.srcnn import SRCNN
 
 
 BASE_DIR = Path(__file__).resolve().parents[3]

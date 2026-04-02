@@ -8,6 +8,11 @@ from app.db.base import Base
 from app.utils.file_storage import STORAGE_ROOT, _ensure_directories
 
 
+from app.db.session import engine
+
+# Create the database tables if they do not exist
+Base.metadata.create_all(bind=engine)
+
 def create_app() -> FastAPI:
     app = FastAPI(
         title="SatEnhance AI Backend",
