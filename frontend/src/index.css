@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0f1115;
+  --color-background: #0a0a0f;
   --color-foreground: #f8fafc;
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
@@ -16,34 +16,36 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Utilities */
+/* Luxurious Glassmorphism */
 @utility glassmorphism {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 @utility space-gradient-bg {
-  background: radial-gradient(circle at top right, #1e1b4b, #0f1115 50%);
+  background: radial-gradient(circle at top right, #1e1b4b, #0a0a0f 60%);
 }
 
 @utility text-gradient {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right, #60a5fa, #c084fc);
+  background-image: linear-gradient(to right, #93c5fd, #c084fc, #818cf8);
+}
+
+/* Glass panel for scrolling on texts */
+@utility glass-panel {
+  background: linear-gradient(to right, rgba(255,255,255,0.02), rgba(255,255,255,0.05));
+  backdrop-filter: blur(24px) contrast(110%);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @keyframes loading {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  50% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(100%);
-  }
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
 }

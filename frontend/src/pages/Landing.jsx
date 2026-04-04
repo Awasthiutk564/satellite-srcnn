@@ -30,10 +30,12 @@ export default function Landing() {
                         <span className="text-gradient">Final Frontier.</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-medium">
-                        Transform low-resolution orbital captures into high-fidelity intelligence using state-of-the-art
-                        <span className="text-white"> SRCNN Deep Learning</span>. Designed for clarity, speed, and precision.
-                    </p>
+                    <div className="glass-panel p-8 rounded-3xl mt-12 mb-8 shadow-2xl relative z-10 mx-auto w-fit max-w-3xl transform transition-all hover:scale-105 duration-500">
+                        <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-medium">
+                            Transform low-resolution orbital captures into high-fidelity intelligence using state-of-the-art
+                            <span className="text-white font-bold drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"> SRCNN Deep Learning</span>. Designed for clarity, speed, and precision.
+                        </p>
+                    </div>
 
                     <div className="pt-10 flex flex-col sm:flex-row gap-6 justify-center items-center">
                         <Link
