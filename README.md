@@ -1,143 +1,72 @@
-## Satellite SRCNN
+# SatEnhance AI – Satellite SRCNN
 
-Deep Learning-Based Super-Resolution for Satellite Imaging Systems
+Deep Learning-Based Super-Resolution for Satellite Imaging Systems with a luxurious, modern web interface.
 
-This repository contains an implementation of a Super-Resolution Convolutional Neural Network (SRCNN) for enhancing the spatial resolution of satellite imagery. The project also includes a FastAPI-based backend for serving the model as a web service.
+This repository contains a full-stack application featuring a **Super-Resolution Convolutional Neural Network (SRCNN)** designed to enhance the spatial resolution of satellite imagery. It pairs an AI-powered FastAPI backend serving the model alongside a rich, aesthetically premium React frontend interface.
 
-### Project Structure
+## Key Features
 
-```
-satellite_srcnn/
-├── backend/                    # FastAPI backend for model serving
-│   ├── app/
-│   │   ├── api/v1/routes/     # API endpoints (auth, images, enhance)
-│   │   ├── core/              # Configuration, security, dependencies
-│   │   ├── db/                # Database models and session management
-│   │   ├── ml/                # ML utilities (inference, metrics)
-│   │   ├── schemas/           # Pydantic schemas
-│   │   └── services/          # Business logic services
-│   └── alembic/               # Database migrations
-├── checkpoints/               # Saved model checkpoints
-├── data/                      # Training and evaluation datasets
-│   ├── processed/             # Processed HR/LR patches
-│   ├── raw/                   # Raw downloaded data
-│   └── split/                 # Train/val/test splits
-├── models/                    # Model architectures (SRCNN)
-├── results/                   # Generated outputs
-│   ├── images/                # Comparison images
-│   └── metrics/               # CSV metrics (loss, PSNR, SSIM, MSE)
-├── scripts/                    # Training, evaluation, and data scripts
-│   ├── train.py              # SRCNN training script
-│   ├── evaluate.py           # Model evaluation script
-│   ├── bicubic_baseline.py   # Bicubic interpolation baseline
-│   ├── prepare_data.py       # Dataset download script
-│   └── preprocess.py          # Image preprocessing script
-└── utils/                     # Utility functions
-    └── dataset.py            # PyTorch dataset class
-```
+- **SRCNN Architecture**: Super-Resolution CNN based on Dong et al. (2014) to intelligently unblur images.
+- **Multiple Upscaling Options**: Choose between standard Bicubic Baseline mapping or AI-powered SRCNN upscaling (2x, 3x, 4x options).
+- **Luxurious UI/UX**: Premium frontend featuring dynamic *Glassmorphism*, frosted text scrolling panels, and interactive micro-animations.
+- **Secure Authentication**: Backend-driven JWT authentication with SQLite UUID handling for reliable user registration and login.
+- **Real-Time Processing Dashboard**: Drag-and-drop secure image upload, instant inference latency tracking, and side-by-side metric comparison (PSNR, SSIM, MSE).
 
-### Key Features
+## Tech Stack
+- **Frontend**: React 19, Vite, TailwindCSS (v4), Axios, Lucide Icons.
+- **Backend**: FastAPI, SQLAlchemy, SQLite, Uvicorn, Python-Jose (JWT), Bcrypt.
+- **Machine Learning**: PyTorch (SRCNN implementation & Metrics), Torchvision.
 
-- **SRCNN Architecture**: Super-Resolution Convolutional Neural Network based on Dong et al. (2014)
-  - Layer 1: Feature Extraction (9x9 kernel, 64 filters)
-  - Layer 2: Non-linear Mapping (1x1 kernel, 32 filters)
-  - Layer 3: Reconstruction (5x5 kernel, 1 filter)
-- **Bicubic Interpolation Baseline**: Traditional upscaling method for comparison
-- **Training Pipeline**: 200 epochs with Adam optimizer, MSE loss, best model checkpointing
-- **Evaluation Metrics**: PSNR, MSE, SSIM for quantitative comparison
-- **FastAPI Backend**: RESTful API for image enhancement
-- **UC Merced Land Use Dataset**: Standard satellite imagery benchmark
+---
 
-### Getting Started
+ ## Getting Started
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/Awasthiutk564/satellite-srcnn.git
-   cd satellite-srcnn
-   ```
+To run the full application locally, you will need to open **two separate terminal windows** (one for the backend and one for the frontend).
 
-2. **Set Up Environment**
-   ```bash
-   # Create a Python virtual environment
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Awasthiutk564/satellite-srcnn.git
+cd satellite-srcnn
 
-   # Install dependencies (if requirements.txt exists)
-   pip install -r requirements.txt
-   ```
+2. Start the Backend (API Server)
+Open your first terminal in the root satellite_srcnn directory.
+# Move into backend directory
+cd backend
 
-3. **Prepare Data**
-   ```bash
-   # Download UC Merced Land Use Dataset
-   python scripts/prepare_data.py
+# Create and activate a Virtual Environment (Optional but recommended)
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
 
-   # Preprocess images into HR/LR patches
-   python scripts/preprocess.py
-   ```
-   
-   This creates:
-   - High-resolution patches: `data/processed/high_res/`
-   - Low-resolution patches: `data/processed/low_res/`
+# Install dependencies
+pip install -r requirements.txt
 
-4. **Train the Model**
-   ```bash
-   python scripts/train.py
-   ```
-   
-   Training parameters:
-   - Epochs: 200
-   - Batch size: 16
-   - Learning rate: 5e-5
-   - Device: CUDA (if available) or CPU
+# Start the FastAPI server
+python -m uvicorn app.main:app --reload --port 8000
 
-5. **Run Evaluation**
-   ```bash
-   # Bicubic baseline
-   python scripts/bicubic_baseline.py
+3. Start the Frontend (Website)
+Open a new, second terminal in the root satellite_srcnn directory.
+# Move into frontend directory
+cd frontend
 
-   # SRCNN evaluation
-   python scripts/evaluate.py
-   ```
+# Install necessary Node packages (first time only)
+npm install
 
-6. **Start the Backend API (Optional)**
-   ```bash
-   cd backend
-   uvicorn app.main:app --reload
-   ```
-   
-   API endpoints:
-   - `POST /api/v1/auth/register` - User registration
-   - `POST /api/v1/auth/login` - User login
-   - `POST /api/v1/images/upload` - Upload images
-   - `POST /api/v1/enhance` - Enhance image using SRCNN
+# Start the Vite development server
+npm run dev
+Right-click or Ctrl-click the local link provided in your terminal to open the aesthetic UI in your browser!
 
-### Results
+🧠 Architecture Details
+The machine learning pipeline processes satellite imagery patches through three core layers:
 
-Evaluation results are saved in `results/metrics/`:
+1-> Feature Extraction Layer: Uses 9x9 kernels to extract features from the blurry input patch.
+2-> Non-linear Mapping Layer: Uses 1x1 kernels to map features into a higher-level structural representation.
+3-> Reconstruction Layer: Uses 5x5 kernels to seamlessly reconstruct the high-resolution output.
+(Models are trained utilizing the UC Merced Land Use Dataset as a standard satellite imagery benchmark).
 
-- `loss_history.csv` - Training and validation loss per epoch
-- `bicubic_results.csv` - Bicubic baseline metrics (PSNR, MSE, SSIM)
-- `evaluation_results.csv` - SRCNN vs Bicubic comparison
+📈 Evaluation Results
+All outputs and metrics computed against Bicubic baselines are automatically tracked. Your historical uploads are securely saved and can be found evaluated inside /backend/storage/.
 
-Sample metrics format:
-| Metric | Bicubic | SRCNN |
-|--------|---------|-------|
-| PSNR   | ~XX dB  | ~XX dB|
-| MSE    | ~XX     | ~XX   |
-| SSIM   | ~0.XX   | ~0.XX |
-
-### Architecture Details
-
-The SRCNN model processes low-resolution satellite images through three convolutional layers:
-
-1. **Feature Extraction Layer**: Uses 9x9 kernels to extract features from the blurry input
-2. **Non-linear Mapping Layer**: Uses 1x1 kernels to map features to higher-level representations
-3. **Reconstruction Layer**: Uses 5x5 kernels to reconstruct the high-resolution output
-
-Input: Grayscale satellite images (1 channel, 99x99 pixels)
-Output: Super-resolved image (1 channel, 99x99 pixels)
-
-### Contributing
-
-Contributions, suggestions, and issues are welcome. Feel free to open an issue or submit a pull request.
-
+Contributions and suggestions are always welcome!
