@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Satellite, LogOut, User as UserIcon } from 'lucide-react';
 
 export default function Navbar() {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/');
+    };
 
     return (
         <nav className="border-b border-white/10 glassmorphism sticky top-0 z-50">
@@ -28,7 +34,8 @@ export default function Navbar() {
                                     <span className="hidden sm:inline">{user.full_name || user.email}</span>
                                 </div>
                                 <button
-                                    onClick={logout}
+                                    id="logout-button"
+                                    onClick={handleLogout}
                                     className="ml-4 p-2 text-gray-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all"
                                     title="Logout"
                                 >

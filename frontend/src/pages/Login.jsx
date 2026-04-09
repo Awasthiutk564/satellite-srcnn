@@ -1,11 +1,32 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Satellite, Lock, Mail, ArrowRight } from 'lucide-react';
+import { Satellite, Lock, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
+
+const getFirebaseErrorMessage = (code) => {
+    switch (code) {
+        case 'auth/user-not-found':
+            return 'No account found with this email address.';
+        case 'auth/wrong-password':
+        case 'auth/invalid-credential':
+            return 'Invalid email or password. Please try again.';
+        case 'auth/too-many-requests':
+            return 'Too many failed attempts. Please try again later.';
+        case 'auth/user-disabled':
+            return 'This account has been disabled.';
+        case 'auth/invalid-email':
+            return 'Please enter a valid email address.';
+        case 'auth/network-request-failed':
+            return 'Network error. Check your connection.';
+        default:
+            return 'Login failed. Please check your credentials.';
+    }
+};
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { login } = useAuth();
@@ -19,7 +40,7 @@ export default function Login() {
             await login(email, password);
             navigate('/dashboard');
         } catch (err) {
-            setError(err.response?.data?.detail || 'Failed to login. Please check credentials.');
+            setError(getFirebaseErrorMessage(err.code));
         } finally {
             setLoading(false);
         }
@@ -42,7 +63,7 @@ export default function Login() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {error && (
-                            <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg text-sm text-center">
+                            <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-lg text-sm text-center animate-[shake_0.5s_ease-in-out]">
                                 {error}
                             </div>
                         )}
@@ -51,6 +72,7 @@ export default function Login() {
                             <div className="relative group">
                                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
                                 <input
+                                    id="login-email"
                                     type="email"
                                     required
                                     value={email}
@@ -63,23 +85,44 @@ export default function Login() {
                             <div className="relative group">
                                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
                                 <input
-                                    type="password"
+                                    id="login-password"
+                                    type={showPassword ? 'text' : 'password'}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-11 py-4 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+                                    className="w-full bg-white/5 border border-white/10 rounded-xl px-11 py-4 pr-12 text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
                                     placeholder="Password"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors"
+                                >
+                                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                </button>
                             </div>
                         </div>
 
                         <button
+                            id="login-submit"
                             type="submit"
                             disabled={loading}
                             className="w-full bg-primary hover:bg-primary-hover text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 group transition-all disabled:opacity-50"
                         >
-                            {loading ? 'Authenticating...' : 'Sign In'}
-                            {!loading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                            {loading ? (
+                                <span className="flex items-center gap-2">
+                                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                    </svg>
+                                    Authenticating...
+                                </span>
+                            ) : (
+                                <>
+                                    Sign In
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </>
+                            )}
                         </button>
                     </form>
 

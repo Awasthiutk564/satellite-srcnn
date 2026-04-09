@@ -1,5 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import api from '../services/api';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    updateProfile
+} from 'firebase/auth';
+import { auth } from '../services/firebase';
 
 const AuthContext = createContext(null);
 
@@ -7,40 +14,40 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchUser = async () => {
-        try {
-            const res = await api.get('/auth/me');
-            setUser(res.data);
-        } catch (err) {
-            setUser(null);
-            localStorage.removeItem('token');
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            fetchUser();
-        } else {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (firebaseUser) {
+                setUser({
+                    uid: firebaseUser.uid,
+                    email: firebaseUser.email,
+                    full_name: firebaseUser.displayName || firebaseUser.email.split('@')[0],
+                });
+            } else {
+                setUser(null);
+            }
             setLoading(false);
-        }
+        });
+
+        return () => unsubscribe();
     }, []);
 
     const login = async (email, password) => {
-        const res = await api.post('/auth/login', { email, password });
-        localStorage.setItem('token', res.data.access_token);
-        await fetchUser();
+        await signInWithEmailAndPassword(auth, email, password);
     };
 
     const register = async (email, password, full_name) => {
-        await api.post('/auth/register', { email, password, full_name });
-        await login(email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: full_name });
+        // Update local state with the display name immediately
+        setUser({
+            uid: userCredential.user.uid,
+            email: userCredential.user.email,
+            full_name: full_name,
+        });
     };
 
-    const logout = () => {
-        localStorage.removeItem('token');
+    const logout = async () => {
+        await signOut(auth);
         setUser(null);
     };
 
