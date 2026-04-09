@@ -1,38 +1,20 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.egg-info/
-dist/
-build/
-*.egg
-.env
-venv/
-env/
-
-# Node
-node_modules/
-npm-debug.log*
-
-# Data & models (too large for git)
-data/
-*.h5
-*.hdf5
-*.pkl
-*.pth
+# Zip files ignore karo
 *.zip
+# Dataset folders ignore karo — bahut badi hain
+data/raw/
+data/processed/
 
-# IDE
-.vscode/
-.idea/
+# Model checkpoints ignore karo
+checkpoints/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Database
-*.db
-*.sqlite3
-
-# Byte-compiled
+# Python cache ignore karo
+__pycache__/
 *.pyc
+*.pyo
+
+# Results images ignore karo
+results/images/
+
+# IDE files ignore karo
+.idea/
+.vscode/

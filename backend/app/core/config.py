@@ -22,33 +22,19 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "satenhance"
     POSTGRES_DB: str = "satenhance"
 
-    DATABASE_URL: str | None = None
-
     # CORS
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:3000", 
-        "http://127.0.0.1:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3001",
-        "http://localhost:5173",
-        "http://127.0.0.1:5173"
-    ]
+    CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
-        if self.DATABASE_URL:
-            return self.DATABASE_URL
-        if self.POSTGRES_USER == "satenhance" and self.POSTGRES_PASSWORD == "satenhance" and self.POSTGRES_HOST == "localhost":
-            return "sqlite:///./satenhance.db"
         return (
             f"postgresql+psycopg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
             f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
         )
 
-    model_config = {
-        "env_file": ".env",
-        "env_file_encoding": "utf-8"
-    }
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
 
 
 @lru_cache

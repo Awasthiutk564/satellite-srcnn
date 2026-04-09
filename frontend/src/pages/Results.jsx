@@ -8,7 +8,7 @@ export default function Results() {
     const navigate = useNavigate();
     const [data, setData] = useState(location.state?.resultData || null);
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const API_URL = 'http://localhost:8000';
 
     useEffect(() => {
         // If we land here without state, we'd normally fetch the result by ID.
