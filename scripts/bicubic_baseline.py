@@ -98,6 +98,3 @@ def run_bicubic_baseline():
 # ── Run ───────────────────────────────────────────────────────
 if __name__ == "__main__":
     run_bicubic_baseline()
-
-
-##Less noise for better results
