@@ -84,7 +84,7 @@ def run_bicubic_baseline():
 
     # Results ko CSV mein save karo
     df          = pd.DataFrame(results)
-    output_path = os.path.join(RESULTS_DIR, "bicubic_results.csv")
+    output_path = os.path.join(RESULTS_DIR, "bicubic_results.csv") 
     df.to_csv(output_path, index=False)
 
     # Average metrics print karo
@@ -98,3 +98,6 @@ def run_bicubic_baseline():
 # ── Run ───────────────────────────────────────────────────────
 if __name__ == "__main__":
     run_bicubic_baseline()
+
+
+##Less noise for better results
